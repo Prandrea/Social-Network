@@ -1,8 +1,8 @@
 {
-    "name": "18-nosql",
+    "name": "Social-Network",
     "version": "1.0.0",
     "private": true,
-    "description": "",
+    "description": "Social Network-NoSQL",
     "main": "server.js",
     "scripts": {
       "start": "node server.js"

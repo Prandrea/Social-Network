@@ -2,7 +2,7 @@ const { user } = require("../models");
 
 const userController = {
     //get all users
-  getallusers(req, res) {
+  getAllUsers(req, res) {
     user.find({})
     .populate({
       path: 'friends',
@@ -17,7 +17,7 @@ const userController = {
       });
   },
   // get user by ID
-  getUserbyId({ params }, res) {
+  getUserById({ params }, res) {
     user.findOne({ _id: params.userId })
     .populate({
       path: 'friends',
@@ -47,7 +47,7 @@ const userController = {
 
   
 //update user by Id
-  updateuser({ params, body }, res) {
+  updateUser({ params, body }, res) {
     user.findOneAndUpdate({ _id: params.userId }, body, {
       new: true,
       runValidators: true,
@@ -74,7 +74,7 @@ const userController = {
       .catch(err => res.status(400).json(err));
   },
 
-  newfriend({ params}, res) {
+  newFriend({ params}, res) {
       user.findOneAndUpdate(
         { _id: params.userId },
         {$addToSet: {friends: params.friendId}},
@@ -90,7 +90,7 @@ const userController = {
           .catch(err => res.json(err));
   },
 
-  deletefriend({ params}, res) {
+  deleteFriend({ params}, res) {
     user.findOneAndUpdate(
       { _id: params.userId },
       {$pull:{friends: params.friendId}},

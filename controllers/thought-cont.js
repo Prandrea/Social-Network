@@ -13,7 +13,7 @@ const thoughtController = {
     },
 
   
-    getThoughtByID({ params }, res) {
+    getThoughtById({ params }, res) {
         thought.findOne({ id: params._id })
         .select('-__v')
           .then((thoughtData) => {

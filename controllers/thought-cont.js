@@ -12,34 +12,8 @@ const thoughtController = {
       });
     },
 
-    createThought ({ body }, res) {
-    thought.create(body)
-.then ((thoughtData) => 
-    
-    user.findOneAndUpdate(
-        {_id: body.userId},
-        {$addToSet: {thoughts: thoughtData._id}},
-        {new: true, runValidators: true})
-        .populate([{
-          path: 'thoughts',
-          select: '-__v'
-        }, 
-        {
-          path: 'friends',
-          select: '-__v'
-        }
-      ])
-        .select('-__v')
-        .then((userData) => res.json({thoughtData, userData}))
-)
-    .catch((err) =>{ 
-        console.error(err);
-        res.status(400).json(err)
-        
-    });
-},
-
-    getOneThought({ params }, res) {
+  
+    getThoughtByID({ params }, res) {
         thought.findOne({ id: params._id })
         .select('-__v')
           .then((thoughtData) => {
@@ -54,6 +28,33 @@ const thoughtController = {
             res.status(400).json(err);
           });
       },
+      
+      createThought ({ body }, res) {
+        thought.create(body)
+    .then ((thoughtData) => 
+        
+        user.findOneAndUpdate(
+            {_id: body.userId},
+            {$addToSet: {thoughts: thoughtData._id}},
+            {new: true, runValidators: true})
+            .populate([{
+              path: 'thoughts',
+              select: '-__v'
+            }, 
+            {
+              path: 'friends',
+              select: '-__v'
+            }
+          ])
+            .select('-__v')
+            .then((userData) => res.json({thoughtData, userData}))
+    )
+        .catch((err) =>{ 
+            console.error(err);
+            res.status(400).json(err)
+            
+        });
+    },
 
       updateThought({ params, body }, res) {
         thought.findOneAndUpdate({ id: params._id }, body, {
